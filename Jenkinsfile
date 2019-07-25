@@ -85,7 +85,7 @@ pipeline
     }
     post { 
          success { 
-            echo 'notified to slack'
+            echo 'notified to slack '
             slackSend (color: '#00FF00', message: " JOB SUCCESSFUL: Job '${JOB_NAME} [${BUILD_NUMBER}]' (${BUILD_URL})")
          }
          failure {
