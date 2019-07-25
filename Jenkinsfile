@@ -72,6 +72,15 @@ pipeline
                
             }
         }
+      
+        stage ('Deploy') {
+            steps {
+              withCredentials([file(credentialsId: 'angular-react-deployment-server', variable: 'deployment_server')]) {
+                   sh 'scp -v -i ${deployment_server} ankushApp.zip ubuntu@18.224.182.74:/home/ubuntu'
+                   sh 'ssh -v -i ${deployment_server} ubuntu@18.224.182.74 "cd /home/ubuntu;unzip -o ankushApp.zip . ;ls;"'
+               }
+            }
+        }
         
     }
     post { 
