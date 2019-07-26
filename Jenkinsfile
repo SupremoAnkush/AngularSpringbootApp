@@ -12,10 +12,10 @@ pipeline
     
     
     stages {
-        stage('git cloning') {
+        stage('removing the previous build') {
             steps {
                sh 'rm -rf dist ankushApp.zip'
-               git credentialsId: 'AnkushGithub', url: 'https://github.com/SupremoAnkush/AngularSpringbootApp.git'
+               //git credentialsId: 'AnkushGithub', url: 'https://github.com/SupremoAnkush/AngularSpringbootApp.git'
                 
             }
         }
@@ -29,7 +29,7 @@ pipeline
         //          sh 'npm run test'
         //      }
         // }
-        stage('SonarQube') 
+       /* stage('SonarQube') 
        {
            
             environment {
@@ -47,7 +47,17 @@ pipeline
             //}
            }
             
-        }          
+        } */  
+      stage('Sonar') {
+            environment {
+                scannerHome=tool 'sonar scanner'
+            }
+            steps{
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId:'Hemant_Sonar_Cred', usernameVariable: 'USER', passwordVariable: 'PASS']]){
+                    sh "mvn $USER:$PASS -Dsonar.host.url=http://ec2-3-17-164-37.us-east-2.compute.amazonaws.com:9000"
+                }
+            }
+        }
       
        
         stage('build') {
@@ -66,7 +76,7 @@ pipeline
             steps{
                 sh 'ls'
                 withCredentials([usernamePassword(credentialsId: 'ankush_nexus_key', passwordVariable: 'ankush_nexus_password', usernameVariable: 'ankush_nexus')]) {
-                 sh label: '', script: 'curl -v -u ${ankush_nexus}:${ankush_nexus_password} --upload-file ankushApp.zip http://3.14.251.87:8081/nexus/content/repositories/devopstraining/ankushApp/ankush-${BUILD_NUMBER}.zip'
+                 sh label: '', script: 'curl -v -u ${ankush_nexus}:${ankush_nexus_password} --upload-file ankushApp.zip http://3.17.164.37:8081/nexus/content/repositories/devopstraining/Team_AHM/ankush-${BUILD_NUMBER}.zip'
                  
                 }
                
