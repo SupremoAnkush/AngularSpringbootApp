@@ -85,9 +85,9 @@ pipeline
       
         stage ('Deploy') {
             steps {
-              withCredentials([file(credentialsId: 'angular-react-deployment-server', variable: 'deployment_server')]) {
-                   sh 'scp -v -i ${deployment_server} ankushApp.zip ubuntu@13.233.78.62:/home/ubuntu'
-                   sh 'ssh -v -i ${deployment_server} ubuntu@13.233.78.62 "cd /home/ubuntu;unzip -o ankushApp.zip -d angularApp;cd angularApp;pm2 restart ankushAngular"'
+              withCredentials([file(credentialsId: '', variable: 'deployment_server')]) {
+                   sh 'scp -v -i ${deployment_server} ankushApp.zip ubuntu@18.224.182.74:/home/ubuntu'
+                   sh 'ssh -v -i ${deployment_server} ubuntu@18.224.182.74 "cd /home/ubuntu;unzip -o ankushApp.zip -d angularApp;cd angularApp;pm2 restart ankushAngular"'
                }
             }
         }
