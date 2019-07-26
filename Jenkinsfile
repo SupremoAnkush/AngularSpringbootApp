@@ -29,7 +29,7 @@ pipeline
         //          sh 'npm run test'
         //      }
         // }
-       /* stage('SonarQube') 
+       stage('SonarQube') 
        {
            
             environment {
@@ -47,8 +47,8 @@ pipeline
             //}
            }
             
-        } */  
-      stage('Sonar') {
+        }  
+      /*stage('Sonar') {
             environment {
                 scannerHome=tool 'sonar scanner'
             }
@@ -57,7 +57,7 @@ pipeline
                     sh "mvn $USER:$PASS -Dsonar.host.url=http://ec2-3-17-164-37.us-east-2.compute.amazonaws.com:9000"
                 }
             }
-        }
+        }*/
       
        
         stage('build') {
