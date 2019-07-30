@@ -41,14 +41,20 @@ pipeline
                   sh '${scannerHome}/bin/sonar-scanner -Dproject.settings=./sonar-project.properties'
               }
               //sh 'npm run sonar'
-           
-            //timeout(time: 1, unit: 'HOURS') {
-                //waitForQualityGate abortPipeline: true
-            //}
            }
             
-        }  
-      /*stage('Sonar') {
+        }
+      /* stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+       }*/
+    
+      /*
+      this is for maven project
+      stage('Sonar') {
             environment {
                 scannerHome=tool 'sonar scanner'
             }
